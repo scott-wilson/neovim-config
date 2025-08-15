@@ -106,3 +106,5 @@ vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldenable = false
 
+vim.o.exrc = true
+vim.o.secure = true

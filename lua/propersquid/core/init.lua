@@ -1,5 +1,6 @@
 require('propersquid.core.keymaps')
 require('propersquid.core.settings')
+require("propersquid.core.profiles")
 
 -- LSP Diagnostics Options Setup
 vim.diagnostic.config({
