@@ -7,6 +7,10 @@ if vim.g.format_on_save ~= nil then
 end
 
 local function has_value(arr, val)
+  if arr == nil then
+    return false
+  end
+
   for index, value in ipairs(arr) do
     if value == val then
       return true
