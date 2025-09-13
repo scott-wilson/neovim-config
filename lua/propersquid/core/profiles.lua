@@ -36,14 +36,18 @@ local function load_rust_profile()
   require("mason").setup()
   local mason_lspconfig = require("mason-lspconfig")
   mason_lspconfig.setup { ensure_installed = { "codelldb" } }
+end
 
-  -- vim.keymap.set("n", "<leader>a", function()
-  --   -- Supports rust-analyzer's grouping or vim.lsp.buf.codeAction() if you don't want grouping.
-  --   vim.cmd.RustLsp("codeAction")
-  -- end, { silent = true, buffer = bufnr })
-  -- vim.keymap.set("n", "K", function()
-  --   vim.cmd.RustLsp({ "hover", "actions" })
-  -- end, { silent = true, buffer = bufnr })
+local function load_c_cpp_profile()
+  require("mason").setup()
+  local mason_lspconfig = require("mason-lspconfig")
+  mason_lspconfig.setup { ensure_installed = { "clangd", "clang-format", "cmake", "cmakelang" } }
+
+  require("cmake-tools").setup {
+    cmake_build_directory = function()
+      return "out/${variant:buildType}"
+    end
+  }
 end
 
 local function format_on_save()
@@ -61,13 +65,16 @@ end
 function load_profile()
   require("mason").setup()
   local mason_lspconfig = require("mason-lspconfig")
-  mason_lspconfig.setup { ensure_installed = { "lua_ls" } }
+  mason_lspconfig.setup { ensure_installed = { "lua_ls", "tombi", "yamlls", "yamllint" } }
 
   if has_value(vim.g.project_profiles, "python") then
     load_python_profile()
   end
   if has_value(vim.g.project_profiles, "rust") then
     load_rust_profile()
+  end
+  if has_value(vim.g.project_profiles, "c") or has_value(vim.g.project_profiles, "cpp") then
+    load_c_cpp_profile()
   end
 
   if vim.g.format_on_save == true then
