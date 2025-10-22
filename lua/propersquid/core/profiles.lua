@@ -35,7 +35,7 @@ end
 local function load_rust_profile()
   require("mason").setup()
   local mason_lspconfig = require("mason-lspconfig")
-  mason_lspconfig.setup { ensure_installed = { "codelldb" } }
+  mason_lspconfig.setup { ensure_installed = {} }
 end
 
 local function load_c_cpp_profile()
@@ -48,6 +48,17 @@ local function load_c_cpp_profile()
       return "out/${variant:buildType}"
     end
   }
+end
+
+local function load_typescript_profile()
+  require("mason-lspconfig").setup({
+    ensure_installed = {
+      "ts_ls",
+      "eslint",
+      "html",
+      "cssls",
+    }
+  })
 end
 
 local function format_on_save()
@@ -65,7 +76,7 @@ end
 function load_profile()
   require("mason").setup()
   local mason_lspconfig = require("mason-lspconfig")
-  mason_lspconfig.setup { ensure_installed = { "lua_ls", "tombi", "yamlls", "yamllint" } }
+  mason_lspconfig.setup { ensure_installed = { "lua_ls", "tombi", "yamlls" } }
 
   if has_value(vim.g.project_profiles, "python") then
     load_python_profile()
@@ -75,6 +86,9 @@ function load_profile()
   end
   if has_value(vim.g.project_profiles, "c") or has_value(vim.g.project_profiles, "cpp") then
     load_c_cpp_profile()
+  end
+  if has_value(vim.g.project_profiles, "typescript") then
+    load_typescript_profile()
   end
 
   if vim.g.format_on_save == true then
