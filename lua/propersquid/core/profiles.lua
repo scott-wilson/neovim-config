@@ -27,7 +27,7 @@ local function load_python_profile()
   require("mason").setup()
   local mason_lspconfig = require("mason-lspconfig")
   mason_lspconfig.setup { ensure_installed = { "pyright", "ruff" } }
-  require("lspconfig").pyright.setup { capabilities = capabilities }
+  vim.lsp.config.pyright.setup { capabilities = capabilities }
 
   require("neotest").setup({ adapters = { require "neotest-python" } })
 end
